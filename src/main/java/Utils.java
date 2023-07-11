@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
@@ -50,6 +51,16 @@ public class Utils {
         properties.setProperty("ssl", "false");
 
         String SERVER_URL = "jdbc:postgresql://localhost:5432/jpostgresql";
+
+        try {
+            connection = DriverManager.getConnection(SERVER_URL, properties);
+            menu();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Verifique se o servidor está ativo!");
+            System.exit(-42);
+            connection = null;
+        }
     }
 
     private static void disconnect() {
