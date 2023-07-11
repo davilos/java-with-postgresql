@@ -63,6 +63,7 @@ public class Utils {
 
     private static void disconnect() throws SQLException {
         if (connection != null) {
+            System.out.println("\nAté logo!");
             connection.close();
             System.exit(0);
         }
