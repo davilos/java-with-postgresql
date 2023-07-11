@@ -63,7 +63,11 @@ public class Utils {
         }
     }
 
-    private static void disconnect() {
+    private static void disconnect() throws SQLException {
+        if (connection != null) {
+            connection.close();
+            System.exit(0);
+        }
     }
 
     private static void delete() {
