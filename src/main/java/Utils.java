@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -83,6 +81,39 @@ public class Utils {
     }
 
     private static void list() {
-        
+        try {
+            String countQuery = "SELECT COUNT(*) AS count FROM produtos";
+            Statement statement = connection.createStatement();
+            ResultSet countSet = statement.executeQuery(countQuery);
+
+            countSet.next();
+
+            if (countSet.getInt("count") > 0) {
+                String selectAllQuery = "SELECT * FROM produtos";
+                ResultSet selectAllSet = statement.executeQuery(selectAllQuery);
+
+                System.out.print("\n--------------------------------------------------");
+                System.out.printf("%n%-" + 5 + "s %-" + 20 + "s %-" + 15 + "s %-" + 5 + "s%n",
+                        "id", "Nome", "Preço", "Estoque");
+                System.out.println("--------------------------------------------------");
+
+                while (selectAllSet.next()) {
+                    System.out.printf("%-" + 5 + "d %-" + 20 + "s %-" + 15 + ".2f %-" + 5 + "d%n",
+                            selectAllSet.getInt(1), selectAllSet.getString(2),
+                            selectAllSet.getFloat(3), selectAllSet.getInt(4));
+                }
+                System.out.println("--------------------------------------------------");
+
+                selectAllSet.close();
+            } else {
+                System.out.println("\nNão existem produtos cadastrados!");
+            }
+            statement.close();
+            countSet.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("\nErro buscando todos os produtos!");
+            System.exit(-42);
+        }
     }
 }
