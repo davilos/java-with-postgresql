@@ -78,7 +78,31 @@ public class Utils {
     }
 
     private static void insert() {
-        
+        System.out.print("\nInforme o nome do produto: ");
+        String name = scanner.nextLine();
+
+        System.out.print("\nInforme o preço: ");
+        float price = scanner.nextFloat();
+
+        System.out.print("\nInforme a quantidade em estoque: ");
+        int number = scanner.nextInt();
+
+        try {
+            String insertQuery = "INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)";
+
+            PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+
+            insertStatement.setString(1, name);
+            insertStatement.setFloat(2, price);
+            insertStatement.setInt(3, number);
+
+            insertStatement.executeUpdate();
+            insertStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("\nErro ao inserir produto!");
+            System.exit(-42);
+        }
     }
 
     private static void list() {
