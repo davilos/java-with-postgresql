@@ -98,6 +98,9 @@ public class Utils {
 
             insertStatement.executeUpdate();
             insertStatement.close();
+
+            System.out.printf("%nO produto '%s' foi inserido com sucesso!%n", name);
+
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("\nErro ao inserir produto!");
