@@ -81,7 +81,7 @@ public class Utils {
         System.out.print("\nInforme o nome do produto: ");
         String name = scanner.nextLine();
 
-        System.out.print("\nInforme o preço: ");
+        System.out.print("\nInforme o preço R$: ");
         float price = scanner.nextFloat();
 
         System.out.print("\nInforme a quantidade em estoque: ");
