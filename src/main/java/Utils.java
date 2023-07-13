@@ -87,6 +87,8 @@ public class Utils {
         System.out.print("\nInforme a quantidade em estoque: ");
         int number = scanner.nextInt();
 
+        scanner.nextLine(); // Consume a quebra de linha, para evitar que o menu apareça sozinho.
+
         try {
             String insertQuery = "INSERT INTO produtos (nome, preco, estoque) VALUES (?, ?, ?)";
 
