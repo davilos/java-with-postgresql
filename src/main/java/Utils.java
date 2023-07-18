@@ -74,7 +74,55 @@ public class Utils {
     }
 
     private static void update() {
-        
+        String countQuery = "SELECT COUNT(*) AS count FROM produtos WHERE id=?";
+
+        System.out.print("\nInforme o código do produto: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        try {
+            PreparedStatement countStatement = connection.prepareStatement(countQuery);
+            countStatement.setInt(1, id);
+
+            ResultSet countSet = countStatement.executeQuery();
+
+            countSet.next();
+
+            if (countSet.getInt("count") > 0) {
+                String updateQuery = "UPDATE produtos SET nome=?, preco=?, estoque=? WHERE id=?";
+
+                System.out.print("\nInforme o nome do produto: ");
+                String name = scanner.nextLine();
+
+                System.out.print("\nInforme o preço R$: ");
+                float price = scanner.nextFloat();
+
+                System.out.print("\nInforme a quantidade em estoque: ");
+                int number = scanner.nextInt();
+
+                scanner.nextLine(); // Consume a quebra de linha, para evitar que o menu apareça sozinho.
+
+                PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+
+                updateStatement.setString(1, name);
+                updateStatement.setFloat(2, price);
+                updateStatement.setInt(3, number);
+                updateStatement.setInt(4, id);
+
+                updateStatement.executeUpdate();
+
+                countStatement.close();
+                countSet.close();
+                updateStatement.close();
+
+                System.out.printf("%nO produto '%s' foi atualizado com sucesso!%n", name);
+            } else {
+                System.out.println("\nNão existe produto com o id informado!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("\nErro ao atualizar o produto!");
+            System.exit(-42);
+        }
     }
 
     private static void insert() {
