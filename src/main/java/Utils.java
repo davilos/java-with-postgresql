@@ -93,7 +93,7 @@ public class Utils {
                 System.out.print("\nInforme o nome do produto: ");
                 String name = scanner.nextLine();
 
-                System.out.print("\nInforme o preço R$: ");
+                System.out.print("\nInforme o preço: R$");
                 float price = scanner.nextFloat();
 
                 System.out.print("\nInforme a quantidade em estoque: ");
@@ -109,15 +109,14 @@ public class Utils {
                 updateStatement.setInt(4, id);
 
                 updateStatement.executeUpdate();
-
-                countStatement.close();
-                countSet.close();
                 updateStatement.close();
 
                 System.out.printf("%nO produto '%s' foi atualizado com sucesso!%n", name);
             } else {
                 System.out.println("\nNão existe produto com o id informado!");
             }
+            countStatement.close();
+            countSet.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("\nErro ao atualizar o produto!");
@@ -129,7 +128,7 @@ public class Utils {
         System.out.print("\nInforme o nome do produto: ");
         String name = scanner.nextLine();
 
-        System.out.print("\nInforme o preço R$: ");
+        System.out.print("\nInforme o preço: R$");
         float price = scanner.nextFloat();
 
         System.out.print("\nInforme a quantidade em estoque: ");
