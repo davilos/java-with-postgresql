@@ -70,7 +70,37 @@ public class Utils {
     }
 
     private static void delete() {
-        
+        String countQuery = "SELECT COUNT(*) AS count FROM produtos WHERE id=?";
+        String deleteQuery = "DELETE FROM produtos WHERE id=?";
+
+        System.out.print("\nDigite o código do produto: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        try {
+            PreparedStatement countStatement = connection.prepareStatement(countQuery);
+            countStatement.setInt(1, id);
+
+            ResultSet countSet = countStatement.executeQuery();
+            countSet.next();
+
+            if (countSet.getInt("count") > 0) {
+                PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
+                deleteStatement.setInt(1, id);
+
+                deleteStatement.executeUpdate();
+                deleteStatement.close();
+
+                System.out.printf("%nO produto foi removido com sucesso!%n");
+            } else {
+                System.out.println("\nNão existe um produto com o id informado!");
+            }
+            countStatement.close();
+            countSet.close();
+        } catch (Exception e ) {
+            e.printStackTrace();
+            System.err.println("\nErro ao deletar produto!");
+            System.exit(-42);
+        }
     }
 
     private static void update() {
